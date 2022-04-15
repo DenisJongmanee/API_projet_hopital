@@ -9,7 +9,7 @@ class Manage_personnel:
 
     def afficher_liste_personnel(self):
         # methode pour afficher tous les personnels
-        instructionBDD = "SELECT personnel_soigant.id_personnel, nom, prenom, date_naissance, nom_service, adresse_mail FROM personnel_soigant INNER JOIN service ON personnel_soigant.num_service=service.id_service"
+        instructionBDD = "SELECT personnelsoignant.id_personnel, nom, prenom, date_naissance, nom_service, adresse_mail FROM personnelsoignant INNER JOIN service ON personnelsoignant.num_service=service.id_service"
         self.curseurBDD.execute(instructionBDD)
         resultat = self.curseurBDD.fetchall()
         retour = []
@@ -20,7 +20,7 @@ class Manage_personnel:
     
     def ajouter_personnel(self, personnel):
         # methode pour ajouter un personnel soignant
-        instructionBDD = f"INSERT INTO personnel_soigant (nom, prenom, date_naissance, num_service, adresse_mail, mot_de_passe) " \
+        instructionBDD = f"INSERT INTO personnelsoignant (nom, prenom, date_naissance, num_service, adresse_mail, mot_de_passe) " \
                          f"VALUES ('{personnel.nom}', '{personnel.prenom}', '{personnel.date}', {personnel.service}, '{personnel.email}', '{personnel.password}')"
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()
@@ -40,10 +40,13 @@ class Manage_personnel:
         self.conn.commit()
         
     def get_user(self, email):
-        instructionBDD = f"SELECT adresse_mail, mot_de_passe FROM personnel_soigant WHERE adresse_mail= '{email}'"
+        instructionBDD = f"SELECT adresse_mail, mot_de_passe, roles FROM personnelsoignant WHERE adresse_mail= '{email}'"
         self.curseurBDD.execute(instructionBDD)
         resultat = self.curseurBDD.fetchall()
         if len(resultat) == 0:
             return {}
         else:
-            return {'email': resultat[0][0], 'password': resultat[0][1]}
+            if resultat[0][2] != None:
+                return {'email': resultat[0][0], 'password': resultat[0][1], 'roles':['ROLE_ADMIN']}
+            else:
+                return {'email': resultat[0][0], 'password': resultat[0][1], 'roles':resultat[0][2]}
