@@ -10,7 +10,7 @@ class Manage_patient:
 
     def afficher_donnees_patient(self, patient):
         # methode pour afficher les données d'un patient en prenant en compte son id
-        instructionBDD = f"SELECT * FROM patient WHERE id = {patient}"
+        instructionBDD = f"SELECT * FROM patient WHERE id_patient = {patient}"
         self.curseurBDD.execute(instructionBDD)
         dictionnaire_retour = {}
         patient = self.curseurBDD.fetchone()
@@ -20,7 +20,7 @@ class Manage_patient:
 
     def afficher_liste_patient(self):
         # methode pour afficher tous les patients
-        instructionBDD = "SELECT patient.id, nom, prenom, date_naissance, sejour.id, num_chambre, num_lit FROM (Patient INNER JOIN Sejour ON Patient.id=Sejour.patient_id INNER JOIN lit ON Sejour.lit_id=lit.id) INNER JOIN sejour_chambre ON sejour.id=sejour_chambre.id_sejour INNER JOIN chambre ON sejour_chambre.id_chambre=chambre.id WHERE sejour.date_sortie_sejour>NOW() "
+        instructionBDD = "SELECT patient.id_patient, nom, prenom, date_naissance, sejour.id_sejour, num_chambre, num_lit FROM (Patient INNER JOIN Sejour ON Patient.id_patient=Sejour.num_patient INNER JOIN lit ON Sejour.num_lit=lit.id_lit) INNER JOIN sejour_chambre ON sejour.id_sejour=sejour_chambre.num_sejour INNER JOIN chambre ON sejour_chambre.num_chambre=chambre.id_chambre WHERE sejour.date_sortie_sejour>NOW() "
         self.curseurBDD.execute(instructionBDD)
         resultat = self.curseurBDD.fetchall()
         
@@ -46,7 +46,7 @@ class Manage_patient:
     def modifier_patient(self, patient, id_patient):
     # int id_patient
     # methode pour modifier un patient en prenant en compte son id
-        instructionBDD = f"UPDATE patient set nom = '{patient.nom}', prenom = '{patient.prenom}', date_naissance = '{patient.date}' where id = {id_patient};"
+        instructionBDD = f"UPDATE patient set nom = '{patient.nom}', prenom = '{patient.prenom}', date_naissance = '{patient.date}' where id_patient = {id_patient};"
 
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()

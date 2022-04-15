@@ -18,7 +18,7 @@ class Manage_service:
 
     def supprimer_service(self, service):
         # methode pour supprimer un service de la bdd en prenant en compte son id
-        instructionBDD = f"DELETE * FROM service Where id = {service}"
+        instructionBDD = f"DELETE * FROM service Where id_service = {service}"
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()
         #si on veut aller plus loin, on peut garder les données pour les insérer dans une base de donnée dite "archive"
@@ -26,13 +26,13 @@ class Manage_service:
     def modifier_service(self, service, nom, zone):
         # int id_sejour /str nom et zone géographique
         # methode pour modifier un service
-        instructionBDD = f"UPDATE service set nom = '{nom}', zone = '{zone}' where id = {service};"
+        instructionBDD = f"UPDATE service set nom = '{nom}', zone = '{zone}' where id_service = {service};"
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()
 
     def afficher_liste_service(self):
         # methode pour afficher tous les service
-        instructionBDD = "SELECT id, nom_service, zone_geographique FROM Service"
+        instructionBDD = "SELECT id_service, nom_service, zone_geographique FROM Service"
         self.curseurBDD.execute(instructionBDD)
         resultat = self.curseurBDD.fetchall()
         print(resultat)

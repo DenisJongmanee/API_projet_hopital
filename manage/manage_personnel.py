@@ -9,7 +9,7 @@ class Manage_personnel:
 
     def afficher_liste_personnel(self):
         # methode pour afficher tous les personnels
-        instructionBDD = "SELECT personnel_soigant.id, nom, prenom, date_naissance, nom_service, adresse_mail FROM personnel_soigant INNER JOIN service ON personnel_soigant.id_service=service.id"
+        instructionBDD = "SELECT personnel_soigant.id_personnel, nom, prenom, date_naissance, nom_service, adresse_mail FROM personnel_soigant INNER JOIN service ON personnel_soigant.num_service=service.id_service"
         self.curseurBDD.execute(instructionBDD)
         resultat = self.curseurBDD.fetchall()
         retour = []
@@ -20,7 +20,7 @@ class Manage_personnel:
     
     def ajouter_personnel(self, personnel):
         # methode pour ajouter un personnel soignant
-        instructionBDD = f"INSERT INTO personnel_soigant (nom, prenom, date_naissance, id_service, adresse_mail, mot_de_passe) " \
+        instructionBDD = f"INSERT INTO personnel_soigant (nom, prenom, date_naissance, num_service, adresse_mail, mot_de_passe) " \
                          f"VALUES ('{personnel.nom}', '{personnel.prenom}', '{personnel.date}', {personnel.service}, '{personnel.email}', '{personnel.password}')"
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()
@@ -35,7 +35,7 @@ class Manage_personnel:
     def modifier_personnel(self, personnel, id_personnel):
         # int id_personnel
         # methode pour modifier un personnel soignant
-        instructionBDD = f"UPDATE PersonnelSoignant set nom = '{personnel.nom}', prenom = '{personnel.prenom}', date = '{personnel.date}', id_service = {personnel.service} where id = {id_personnel};"
+        instructionBDD = f"UPDATE PersonnelSoignant set nom = '{personnel.nom}', prenom = '{personnel.prenom}', date = '{personnel.date}', num_service = {personnel.service} where id_personnel = {id_personnel};"
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()
         

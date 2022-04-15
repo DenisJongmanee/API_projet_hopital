@@ -10,8 +10,8 @@ class Manage_sejour:
     def ajouter_sejour(self, sejour : Sejour):
     
         # methode pour ajouter un séjour associé à un patient + lit
-        instructionBDD = f"INSERT INTO Sejour (date_entree_sejour, date_sortie_sejour, probleme, patient_id, lit_id) " \
-                        f"VALUES ('{sejour.dateEntree}', '{sejour.dateSortie}', '{sejour.probleme}', {sejour.patient}, {sejour.idLit});"
+        instructionBDD = f"INSERT INTO Sejour (date_entree_sejour, date_sortie_sejour, probleme, num_patient, num_lit) " \
+                        f"VALUES ('{sejour.dateEntree}', '{sejour.dateSortie}', '{sejour.probleme}', {sejour.patient}, {sejour.num_lit});"
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()
 
@@ -19,7 +19,7 @@ class Manage_sejour:
         idsejour = self.curseurBDD.lastrowid
         
         #chambre
-        instructionBDD2 = f"INSERT INTO sejour_chambre (id_sejour, id_chambre, date_entree_chambre) VALUES ({idsejour},{sejour.idChambre},'{sejour.dateEntree}');"
+        instructionBDD2 = f"INSERT INTO sejour_chambre (num_sejour, num_chambre, date_entree_chambre) VALUES ({idsejour},{sejour.idChambre},'{sejour.dateEntree}');"
         self.curseurBDD.execute(instructionBDD2)
         self.conn.commit()
         
@@ -32,7 +32,7 @@ class Manage_sejour:
 
     def afficher_liste_sejour(self):
         # methode pour afficher tous les sejour
-        instructionBDD = f"SELECT sejour.id, nom, prenom, date_entree_sejour, date_sortie_sejour, nom_service, num_chambre, num_lit, probleme FROM ((Patient INNER JOIN Sejour ON patient.id = sejour.patient_id INNER JOIN lit ON sejour.lit_id=lit.id)INNER JOIN sejour_chambre ON sejour.id=sejour_chambre.id_sejour INNER JOIN chambre ON sejour_chambre.id_chambre=chambre.id) INNER JOIN service_sejour ON sejour.id=service_sejour.sejour_id INNER JOIN service ON service_sejour.service_id=service.id"
+        instructionBDD = f"SELECT sejour.id_sejour, nom, prenom, date_entree_sejour, date_sortie_sejour, nom_service, num_chambre, num_lit, probleme FROM ((Patient INNER JOIN Sejour ON patient.id_patient = sejour.num_patient INNER JOIN lit ON sejour.num_lit=lit.id_lit)INNER JOIN sejour_chambre ON sejour.id_sejour=sejour_chambre.num_sejour INNER JOIN chambre ON sejour_chambre.num_chambre=chambre.id_chambre) INNER JOIN service_sejour ON sejour.id_sejour=service_sejour.num_sejour INNER JOIN service ON service_sejour.num_service=service.id_service"
         self.curseurBDD.execute(instructionBDD)
         resultat = self.curseurBDD.fetchall()
         
@@ -44,20 +44,20 @@ class Manage_sejour:
         return retour
     
     def infoSejour(self, id):
-        instructionBDD = f"SELECT sejour.id, nom, prenom, date_entree_sejour, date_sortie_sejour, service.id, chambre.id, lit.id, probleme FROM ((Patient INNER JOIN Sejour ON patient.id = sejour.patient_id INNER JOIN lit ON sejour.lit_id=lit.id)INNER JOIN sejour_chambre ON sejour.id=sejour_chambre.id_sejour INNER JOIN chambre ON sejour_chambre.id_chambre=chambre.id) INNER JOIN service_sejour ON sejour.id=service_sejour.sejour_id INNER JOIN service ON service_sejour.service_id=service.id WHERE sejour.id={id}"
+        instructionBDD = f"SELECT sejour.id_sejour, nom, prenom, date_entree_sejour, date_sortie_sejour, service.id_service, chambre.id_chambre, lit.id_lit, probleme FROM ((Patient INNER JOIN Sejour ON patient.id_patient = sejour.num_patient INNER JOIN lit ON sejour.num_lit=lit.id_lit)INNER JOIN sejour_chambre ON sejour.id_sejour=sejour_chambre.num_sejour INNER JOIN chambre ON sejour_chambre.num_chambre=chambre.id_chambre) INNER JOIN service_sejour ON sejour.id_sejour=service_sejour.num_sejour INNER JOIN service ON service_sejour.num_service=service.id_service WHERE sejour.id_sejour={id}"
         self.curseurBDD.execute(instructionBDD)
         sejour = self.curseurBDD.fetchone()
         return {"id_sejour":sejour[0], "nom": sejour[1], "prenom": sejour[2], "date_entree_sejour": sejour[3].strftime("%Y-%m-%d %H:%M:%S"), "date_sortie_sejour": sejour[4].strftime("%Y-%m-%d %H:%M:%S"), "service": sejour[5], "chambre":sejour[6], "lit":sejour[7], "probleme": sejour[8]}
 
     def modif_sejour(self, sejour, id):
-        instructionBDD = f"UPDATE Sejour SET lit_id={sejour.idLit}, date_entree_sejour='{sejour.dateEntree}', date_sortie_sejour='{sejour.dateSortie}', probleme='{sejour.probleme}' WHERE id={id}"
+        instructionBDD = f"UPDATE Sejour SET lit={sejour.idLit}, date_entree_sejour='{sejour.dateEntree}', date_sortie_sejour='{sejour.dateSortie}', probleme='{sejour.probleme}' WHERE id_sejour={id}"
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()
         
-        instructionBDD2 = f"UPDATE sejour_chambre SET id_chambre={sejour.idChambre} WHERE id_sejour={id}"
+        instructionBDD2 = f"UPDATE sejour_chambre SET num_chambre={sejour.idChambre} WHERE num_sejour={id}"
         self.curseurBDD.execute(instructionBDD2)
         self.conn.commit()
                 
-        instructionBDD3 = f"UPDATE service_sejour SET service_id={sejour.service} WHERE sejour_id={id}"
+        instructionBDD3 = f"UPDATE service_sejour SET num_service={sejour.service} WHERE num_sejour={id}"
         self.curseurBDD.execute(instructionBDD3)
         self.conn.commit()
