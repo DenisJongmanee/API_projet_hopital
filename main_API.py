@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request, abort
+from flask_cors import CORS
 from classes.patient import Patient
 from manage.manage_patient import Manage_patient
 from classes.personnel import Personnel
@@ -10,8 +11,10 @@ from manage.manage_service import Manage_service
 from classes.chambre import Chambre
 from manage.manage_chambre import Manage_chambre
 from manage.manage_lit import Manage_lit
+from manage.manage_vaccin import Manage_vaccin
 
 main_API = Flask(__name__)
+CORS(main_API)
 
 ######Routes User
 
@@ -297,7 +300,17 @@ def listeLit():
     except:
         abort(500)
  
-        
+@main_API.route('/api/vaccin', methods={'GET'})
+def listeVaccin():
+    try:
+        print('test_API')
+        BaseDD = Manage_vaccin()
+        print('test_API1')
+        dictionnaire_vaccin = BaseDD.afficher_liste_vaccin()
+        print('test_API2')
+        return jsonify(dictionnaire_vaccin)
+    except:
+        abort(500) 
         
         
 if __name__ == '__main__':
