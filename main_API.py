@@ -12,6 +12,7 @@ from classes.chambre import Chambre
 from manage.manage_chambre import Manage_chambre
 from manage.manage_lit import Manage_lit
 from manage.manage_vaccin import Manage_vaccin
+from manage.manage_rendez_vous import Manage_rendez_vous
 
 main_API = Flask(__name__)
 CORS(main_API)
@@ -303,15 +304,23 @@ def listeLit():
 @main_API.route('/api/vaccin', methods={'GET'})
 def listeVaccin():
     try:
-        print('test_API')
         BaseDD = Manage_vaccin()
-        print('test_API1')
         dictionnaire_vaccin = BaseDD.afficher_liste_vaccin()
-        print('test_API2')
         return jsonify(dictionnaire_vaccin)
     except:
         abort(500) 
         
+@main_API.route('/api/rendez_vous', methods={'GET'})
+def listeRendez_vous():
+    try:
+        print('test_API')
+        BaseDD = Manage_rendez_vous()
+        print('test_API1')
+        dictionnaire_rendez_vous = BaseDD.afficher_liste_rendez_vous()
+        print('test_API2')
+        return jsonify(dictionnaire_rendez_vous)
+    except:
+        abort(500) 
         
 if __name__ == '__main__':
     main_API.run()
