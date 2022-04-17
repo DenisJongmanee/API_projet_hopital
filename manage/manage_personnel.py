@@ -40,13 +40,10 @@ class Manage_personnel:
         self.conn.commit()
         
     def get_user(self, email):
-        instructionBDD = f"SELECT adresse_mail, mot_de_passe, roles FROM personnelsoignant WHERE adresse_mail= '{email}'"
+        instructionBDD = f"SELECT adresse_mail, mot_de_passe, nom_role FROM personnelsoignant INNER JOIN role ON personnelsoignant.num_role=role.id_role WHERE adresse_mail= '{email}'"
         self.curseurBDD.execute(instructionBDD)
         resultat = self.curseurBDD.fetchall()
         if len(resultat) == 0:
             return {}
         else:
-            if resultat[0][2] != None:
-                return {'email': resultat[0][0], 'password': resultat[0][1], 'roles':['ROLE_ADMIN']}
-            else:
-                return {'email': resultat[0][0], 'password': resultat[0][1], 'roles':resultat[0][2]}
+            return {'email': resultat[0][0], 'password': resultat[0][1], 'roles':[resultat[0][2]]}

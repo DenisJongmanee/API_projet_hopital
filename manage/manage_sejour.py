@@ -32,7 +32,7 @@ class Manage_sejour:
 
     def afficher_liste_sejour(self):
         # methode pour afficher tous les sejour
-        instructionBDD = f"SELECT sejour.id_sejour, nom, prenom, date_entree_sejour, date_sortie_sejour, nom_service, num_chambre, num_lit, probleme FROM ((Patient INNER JOIN Sejour ON patient.id_patient = sejour.num_patient INNER JOIN lit ON sejour.num_lit=lit.id_lit)INNER JOIN sejour_chambre ON sejour.id_sejour=sejour_chambre.num_sejour INNER JOIN chambre ON sejour_chambre.num_chambre=chambre.id_chambre) INNER JOIN service_sejour ON sejour.id_sejour=service_sejour.num_sejour INNER JOIN service ON service_sejour.num_service=service.id_service"
+        instructionBDD = f"SELECT sejour.id_sejour, nom, prenom, date_entree_sejour, date_sortie_sejour, nom_service, numero_chambre, numero_lit, probleme FROM ((Patient INNER JOIN Sejour ON patient.id_patient = sejour.num_patient INNER JOIN lit ON sejour.num_lit=lit.id_lit)INNER JOIN sejour_chambre ON sejour.id_sejour=sejour_chambre.num_sejour INNER JOIN chambre ON sejour_chambre.num_chambre=chambre.id_chambre) INNER JOIN service_sejour ON sejour.id_sejour=service_sejour.num_sejour INNER JOIN service ON service_sejour.num_service=service.id_service"
         self.curseurBDD.execute(instructionBDD)
         resultat = self.curseurBDD.fetchall()
         
@@ -50,7 +50,7 @@ class Manage_sejour:
         return {"id_sejour":sejour[0], "nom": sejour[1], "prenom": sejour[2], "date_entree_sejour": sejour[3].strftime("%Y-%m-%d %H:%M:%S"), "date_sortie_sejour": sejour[4].strftime("%Y-%m-%d %H:%M:%S"), "service": sejour[5], "chambre":sejour[6], "lit":sejour[7], "probleme": sejour[8]}
 
     def modif_sejour(self, sejour, id):
-        instructionBDD = f"UPDATE Sejour SET lit={sejour.idLit}, date_entree_sejour='{sejour.dateEntree}', date_sortie_sejour='{sejour.dateSortie}', probleme='{sejour.probleme}' WHERE id_sejour={id}"
+        instructionBDD = f"UPDATE Sejour SET num_lit={sejour.idLit}, date_entree_sejour='{sejour.dateEntree}', date_sortie_sejour='{sejour.dateSortie}', probleme='{sejour.probleme}' WHERE id_sejour={id}"
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()
         

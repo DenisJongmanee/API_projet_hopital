@@ -9,7 +9,7 @@ class Manage_chambre:
 
     def afficher_liste_chambre(self):
         # methode pour afficher toutes les chambres
-        instructionBDD = "SELECT chambre.id_chambre, id_chambre, nombre_lits, nom_service FROM Chambre INNER JOIN Service ON chambre.num_service=service.id_service "
+        instructionBDD = "SELECT chambre.id_chambre, numero_chambre, nombre_lits, nom_service FROM Chambre INNER JOIN Service ON chambre.num_service=service.id_service "
         self.curseurBDD.execute(instructionBDD)
 
         resultat = self.curseurBDD.fetchall()
