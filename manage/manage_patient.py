@@ -1,3 +1,4 @@
+from dis import Instruction
 import mysql.connector
 from classes.patient import Patient
 from datetime import datetime
@@ -17,8 +18,16 @@ class Manage_patient:
         print(patient);
         return {'id':patient[0], 'nom':patient[1], 'prenom': patient[2], 'date':patient[3].strftime("%Y-%m-%d")}
          
-
     def afficher_liste_patient(self):
+        instructionBDD = "SELECT id_patient, nom, prenom from Patient"
+        self.curseurBDD.execute(instructionBDD)
+        resultat = self.curseurBDD.fetchall()
+        retour = []
+        for patient in resultat:
+            retour.append({"id": patient[0], "nom": patient[1], "prenom": patient[2]})
+        return retour
+
+    def afficher_liste_patient_sejour(self):
         # methode pour afficher tous les patients
         instructionBDD = "SELECT patient.id_patient, nom, prenom, date_naissance, sejour.id_sejour, num_chambre, num_lit FROM (Patient INNER JOIN Sejour ON Patient.id_patient=Sejour.num_patient INNER JOIN lit ON Sejour.num_lit=lit.id_lit) INNER JOIN sejour_chambre ON sejour.id_sejour=sejour_chambre.num_sejour INNER JOIN chambre ON sejour_chambre.num_chambre=chambre.id_chambre WHERE sejour.date_sortie_sejour>NOW() "
         self.curseurBDD.execute(instructionBDD)

@@ -64,6 +64,16 @@ def listePatient():
         abort(500)
         
         
+@main_API.route('/api/patient_sejour', methods={'GET'})
+def listePatientSejour():
+    try:
+        BaseDD = Manage_patient()
+        dictionnaire_patient = BaseDD.afficher_liste_patient_sejour()
+        return jsonify(dictionnaire_patient)
+    except:
+        abort(500)
+        
+        
 @main_API.route('/api/patient', methods={'POST'})
 def ajoutPatient():
     message = request.get_json(force=True)
