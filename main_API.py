@@ -13,6 +13,7 @@ from manage.manage_chambre import Manage_chambre
 from manage.manage_lit import Manage_lit
 from manage.manage_vaccin import Manage_vaccin
 from manage.manage_rendez_vous import Manage_rendez_vous
+from classes.rendez_vous import Rendez_vous
 
 main_API = Flask(__name__)
 CORS(main_API)
@@ -321,6 +322,21 @@ def listeRendez_vous():
         return jsonify(dictionnaire_rendez_vous)
     except:
         abort(500) 
+
+@main_API.route('/api/rendez_vous', methods={'POST'})
+def ajout_rendez_vous():
+    message = request.get_json(force=True)
+    BaseDD = Manage_rendez_vous()
+    message = message["rendez_vous"]
+    if "nom" in message and "prenom" in message and "dateNaissance" in message and "numSecuriteSociale" in message and "dateRes" in message and "nomVaccin" in message and "nbrDoses" in message:
+        rendez_vous = Rendez_vous(message["nom"], message["prenom"], message["dateNaissance"], message["numSecuriteSociale"], message["dateRes"], message["nomVaccin"], message["nbrDoses"])
+        try :
+            BaseDD.ajouter_rendez_vous(rendez_vous)
+            return "Ok"
+        except:
+            abort(500)
+    else:
+        abort(406)
         
 if __name__ == '__main__':
     main_API.run()

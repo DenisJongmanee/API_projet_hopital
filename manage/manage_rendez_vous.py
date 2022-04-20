@@ -7,14 +7,26 @@ class Manage_rendez_vous:
         # connexion à la base de donnée
         self.curseurBDD = self.conn.cursor()
 
-    def ajouter_rendez_vous(self, rendez_vous):
+    def ajouter_rendez_vous(self, rendez_vous: Rendez_vous):
         # int id_sejour /str nom et zone géographique
         # methode pour ajouter un service
-
-        instructionBDD = f"INSERT INTO Vaccin (id_vaccin, nom_vaccin, description, nombre_dose_max, quantitee_disponible) " \
-                         f"VALUES ('{vaccin.id_vaccin}','{vaccin.nom_vaccin}', '{vaccin.description}', '{vaccin.nombre_dose_max}', '{vaccin.quantitee_disponible}';)"
+        print('test fonction')
+        instructionBDD = f"INSERT INTO patient (nom, prenom, date_naissance, num_secu) " \
+                         f"VALUES ('{rendez_vous.nom}','{rendez_vous.prenom}', '{rendez_vous.date_naissance}', '{rendez_vous.num_secu}');"
         self.curseurBDD.execute(instructionBDD)
+        print('test1')
         self.conn.commit()
+        id_patient = self.curseurBDD.lastrowid
+        instructionBDD = f"INSERT INTO rendezvous (num_vaccin, num_patient, date_rendez_vous, quantieme_dose) " \
+                         f"VALUES ('{rendez_vous.nom_vaccin}','{id_patient}', '{rendez_vous.date_vaccination}', '{rendez_vous.dose}');"
+        self.curseurBDD.execute(instructionBDD)
+        print('test2')
+        self.conn.commit()
+        instructionBDD = f"UPDATE vaccin set quantitee_disponible = quantitee_disponible - 1 where id_vaccin = '{rendez_vous.nom_vaccin}'"
+        print(instructionBDD)
+        self.curseurBDD.execute(instructionBDD)
+        print('test3')
+        self.conn.commit()         
 
     def supprimer_rendez_vous(self, rendez_vous):
         # methode pour supprimer un service de la bdd en prenant en compte son id
