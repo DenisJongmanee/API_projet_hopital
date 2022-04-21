@@ -9,7 +9,7 @@ class Manage_role:
     def afficher_liste_role_cs(self):
         # methode pour afficher tous les service
 
-        instructionBDD = "SELECT if_role, nom_role FROM vaccin"
+        instructionBDD = "SELECT id_role, nom_role FROM Role"
         self.curseurBDD.execute(instructionBDD)
         resultat = self.curseurBDD.fetchall()
         print(resultat)

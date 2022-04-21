@@ -15,7 +15,7 @@ class Manage_patient:
         self.curseurBDD.execute(instructionBDD)
         dictionnaire_retour = {}
         patient = self.curseurBDD.fetchone()
-        print(patient);
+        print(patient)
         return {'id':patient[0], 'nom':patient[1], 'prenom': patient[2], 'date':patient[3].strftime("%Y-%m-%d")}
          
     def afficher_liste_patient(self):
@@ -47,7 +47,7 @@ class Manage_patient:
 
     # def supprimer_patient(self, patient):
     #     # methode pour supprimer un patient de la bdd avec en argument l'id du patient
-    #     instructionBDD = f"DELETE * FROM patient Where idPatient = {patient}"
+    #     instructionBDD = f"DELETE FROM patient Where idPatient = {patient}"
     #     self.curseurBDD.execute(instructionBDD)
     #     self.conn.commit()
     #     # si on veut aller plus loin, on peut garder les données pour les insérer dans une base de donnée dite "archive"

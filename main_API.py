@@ -140,7 +140,6 @@ def listePersonnel():
 def ajoutPersonnel():
     message = request.get_json(force=True)
     BaseDD = Manage_personnel()
-    print("test");
     if "nom" in message and "prenom" in message and "date" in message and "service" in message:
         personnel = Personnel(message["nom"], message["prenom"], message["date"], message["service"])
         try :
@@ -329,11 +328,8 @@ def listeVaccin():
 @main_API.route('/api/rendez_vous', methods={'GET'})
 def listeRendez_vous():
     try:
-        print('test_API')
         BaseDD = Manage_rendez_vous()
-        print('test_API1')
         dictionnaire_rendez_vous = BaseDD.afficher_liste_rendez_vous()
-        print('test_API2')
         return jsonify(dictionnaire_rendez_vous)
     except:
         abort(500) 
@@ -401,12 +397,12 @@ def listeCompte():
     except:
         abort(500)
 
-@main_API.route('/api/cs/add_compte', methods={'POST'})
+@main_API.route('/api/cs/compte', methods={'POST'})
 def inscription():
     message = request.get_json(force=True)
     BaseDD = Manage_personnel()
-    if "nom" in message and "prenom" in message and "date" in message and "email" in message and "role" in message and "service" in message and "password" in message :
-        personnel = Personnel(message["nom"], message["prenom"], message["date"], message["email"], message["role"], message["service"], message["password"])
+    if "Nom" in message and "Prenom" in message and "DateNaissance" in message and "AdresseMail" in message and "Role" in message and "Service" in message and "MotDePasse" in message :
+        personnel = Personnel(message["Nom"], message["Prenom"], message["DateNaissance"], message["AdresseMail"], message["Role"], message["Service"], message["MotDePasse"])
         try :
             BaseDD.ajouter_personnel(personnel)
             return "Ok"
@@ -415,7 +411,7 @@ def inscription():
     else:
         abort(406)
 
-@main_API.route('/api/cs/del_compte', methods={'DELETE'})
+@main_API.route('/api/cs/compte', methods={'DELETE'})
 def suppressionCompte():
     message = request.get_json(force=True)
     BaseDD = Manage_personnel()
@@ -429,14 +425,14 @@ def suppressionCompte():
             abort(406)
 
 
-@main_API.route('/api/cs/put_compte', methods={'PUT'})
+@main_API.route('/api/cs/compte', methods={'PUT'})
 def modificationCompte() :
     message = request.get_json(force=True)
     BaseDD = Manage_personnel()
-    if "personnel" in message and "nom" in message and "prenom" in message and "date" in message and "email" in message and "role" in message and "service" in message and "password" in message:
-        personnel = Personnel(message["nom"], message["prenom"], message["date"], message["email"], message["role"], message["service"], message["password"])
+    if "IdCompte" in message and "Nom" in message and "Prenom" in message and "DateNaissance" in message and "AdresseMail" in message and "role" in message and "Service" in message and "MotDePasse" in message:
+        personnel = Personnel(message["Nom"], message["Prenom"], message["DateNaissance"], message["AdresseMail"], message["role"], message["Service"], message["MotDePasse"])
         try :
-            BaseDD.modifier_personnel(personnel, message["personne"])
+            BaseDD.modifier_personnel(personnel, message["IdCompte"])
             return "Ok"
         except:
             abort(500)

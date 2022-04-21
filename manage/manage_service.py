@@ -12,13 +12,13 @@ class Manage_service:
         # methode pour ajouter un service
 
         instructionBDD = f"INSERT INTO Service (nom_service, zone_geographique) " \
-                         f"VALUES ('{service.nom}', '{service.zone}';)"
+                         f"VALUES ('{service.nom}', '{service.zone}');"
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()
 
     def supprimer_service(self, service):
         # methode pour supprimer un service de la bdd en prenant en compte son id
-        instructionBDD = f"DELETE * FROM service Where id_service = {service}"
+        instructionBDD = f"DELETE FROM service Where id_service = {service}"
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()
         #si on veut aller plus loin, on peut garder les données pour les insérer dans une base de donnée dite "archive"
