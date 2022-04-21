@@ -51,7 +51,7 @@ class Manage_personnel:
 
 
     def afficher_liste_compte_cs(self):
-        # methode pour afficher tous les personnels
+        # methode pour afficher tous les comptes
         instructionBDD = "SELECT personnelsoignant.id_personnel, nom, prenom, date_naissance, adresse_mail, num_role, num_service FROM personnelsoignant"
         self.curseurBDD.execute(instructionBDD)
         resultat = self.curseurBDD.fetchall()
@@ -59,3 +59,23 @@ class Manage_personnel:
         for personnel_soignant in resultat:
             retour.append({"IdCompte":personnel_soignant[0], "Nom":personnel_soignant[1], "Prenom":personnel_soignant[2], "DateNaissance":personnel_soignant[3], "AdresseMail":personnel_soignant[4], "Role":personnel_soignant[5], "Service":personnel_soignant[6]})
         return retour
+
+    def ajouter_compte_cs(self, personnel):
+        # methode pour ajouter un personnel compte
+        instructionBDD = f"INSERT INTO personnelsoignant (nom, prenom, date_naissance, adresse_mail, num_role, num_service, mot_de_passe) " \
+                         f"VALUES ('{personnel.nom}', '{personnel.prenom}', '{personnel.date}', {personnel.email} {personnel.role}, '{personnel.service}', '{personnel.password}')"
+        self.curseurBDD.execute(instructionBDD)
+        self.conn.commit()
+
+    def supprimer_compte_cs(self, personnel):
+        # methode pour supprimer un personnel de la bdd en prenant en compte son id
+        instructionBDD = f"DELETE * FROM personnelsoignant Where id_personnel = {personnel}"
+        self.curseurBDD.execute(instructionBDD)
+        self.conn.commit()
+
+    def modifier_compte_cs(self, personnel, id_personnel):
+        # int id_personnel
+        # methode pour modifier un personnel soignant
+        instructionBDD = f"UPDATE PersonnelSoignant set nom = '{personnel.nom}', prenom = '{personnel.prenom}', date = '{personnel.date}', adresse_mail = '{personnel.email}', num_role = '{personnel.role}', num_service = '{personnel.service}', mot_de_passe = '{personnel.password}', where id_personnel = {id_personnel};"
+        self.curseurBDD.execute(instructionBDD)
+        self.conn.commit()
