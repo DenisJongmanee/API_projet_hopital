@@ -311,7 +311,16 @@ def listeLit():
         return jsonify(dictionnaire_chambre)
     except:
         abort(500)
- 
+
+@main_API.route('/api/cs/lit', methods={'GET'})
+def listeLit():
+    try:
+        BaseDD = Manage_lit()
+        dictionnaire_chambre = BaseDD.afficher_liste_lit_cs()
+        return jsonify(dictionnaire_chambre)
+    except:
+        abort(500)
+
 @main_API.route('/api/vaccin', methods={'GET'})
 def listeVaccin():
     try:
