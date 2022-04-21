@@ -15,8 +15,8 @@ class Manage_lit:
         retour = []
         print(lits)
         for lit in lits:
-            retour.append({"id":lit[0], "num_lit":lit[1]})
-            if lit[2] == None :
+            retour.append({"num_lit":lit[0], "id_sejour":lit[1], "num_chambre":lit[2]})
+            if lit[1] == None :
                 retour.append({"disponible":"oui"})
             else :
                 retour.append({"disponible": "non"})
