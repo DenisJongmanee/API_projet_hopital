@@ -14,6 +14,7 @@ from manage.manage_lit import Manage_lit
 from manage.manage_vaccin import Manage_vaccin
 from manage.manage_rendez_vous import Manage_rendez_vous
 from classes.rendez_vous import Rendez_vous
+from manage.manage_role import Manage_role
 
 main_API = Flask(__name__)
 CORS(main_API)
@@ -191,15 +192,6 @@ def listeService():
     except:
         abort(500)
 
-@main_API.route('/api/cs/service', methods={'GET'})
-def listeService():
-    try:
-        BaseDD = Manage_service()
-        dictionnaire_service = BaseDD.afficher_liste_service_cs()
-        return jsonify(dictionnaire_service)
-    except:
-        abort(500)
-
 
 # @main_API.route('/api/service', methods={'POST'})
 # def ajoutService():
@@ -321,14 +313,7 @@ def listeLit():
     except:
         abort(500)
 
-@main_API.route('/api/cs/lit', methods={'GET'})
-def listeLit():
-    try:
-        BaseDD = Manage_lit()
-        dictionnaire_chambre = BaseDD.afficher_liste_lit_cs()
-        return jsonify(dictionnaire_chambre)
-    except:
-        abort(500)
+
 
 @main_API.route('/api/vaccin', methods={'GET'})
 def listeVaccin():
@@ -339,15 +324,6 @@ def listeVaccin():
     except:
         abort(500)
 
-
-@main_API.route('/api/cs/vaccin', methods={'GET'})
-def listeVaccin():
-    try:
-        BaseDD = Manage_vaccin()
-        dictionnaire_vaccin = BaseDD.afficher_liste_vaccin_cs()
-        return jsonify(dictionnaire_vaccin)
-    except:
-        abort(500)
 
 
 @main_API.route('/api/rendez_vous', methods={'GET'})
@@ -376,7 +352,46 @@ def ajout_rendez_vous():
             abort(500)
     else:
         abort(406)
-        
+
+
+#partie c#
+@main_API.route('/api/cs/service', methods={'GET'})
+def listeService():
+    try:
+        BaseDD = Manage_service()
+        dictionnaire_service = BaseDD.afficher_liste_service_cs()
+        return jsonify(dictionnaire_service)
+    except:
+        abort(500)
+
+@main_API.route('/api/cs/lit', methods={'GET'})
+def listeLit():
+    try:
+        BaseDD = Manage_lit()
+        dictionnaire_chambre = BaseDD.afficher_liste_lit_cs()
+        return jsonify(dictionnaire_chambre)
+    except:
+        abort(500)
+
+@main_API.route('/api/cs/vaccin', methods={'GET'})
+def listeVaccin():
+    try:
+        BaseDD = Manage_vaccin()
+        dictionnaire_vaccin = BaseDD.afficher_liste_vaccin_cs()
+        return jsonify(dictionnaire_vaccin)
+    except:
+        abort(500)
+
+
+@main_API.route('/api/cs/role', methods={'GET'})
+def listeRole():
+    try:
+        BaseDD = Manage_role()
+        dictionnaire_role = BaseDD.afficher_liste_role_cs()
+        return jsonify(dictionnaire_role)
+    except:
+        abort(500)
+
 if __name__ == '__main__':
     main_API.run()
 
