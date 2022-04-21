@@ -47,3 +47,15 @@ class Manage_personnel:
             return {}
         else:
             return {'email': resultat[0][0], 'password': resultat[0][1], 'roles':[resultat[0][2]]}
+
+
+
+    def afficher_liste_compte_cs(self):
+        # methode pour afficher tous les personnels
+        instructionBDD = "SELECT personnelsoignant.id_personnel, nom, prenom, date_naissance, adresse_mail, num_role, num_service FROM personnelsoignant"
+        self.curseurBDD.execute(instructionBDD)
+        resultat = self.curseurBDD.fetchall()
+        retour = []
+        for personnel_soignant in resultat:
+            retour.append({"IdCompte":personnel_soignant[0], "Nom":personnel_soignant[1], "Prenom":personnel_soignant[2], "DateNaissance":personnel_soignant[3], "AdresseMail":personnel_soignant[4], "Role":personnel_soignant[5], "Service":personnel_soignant[6]})
+        return retour

@@ -392,6 +392,15 @@ def listeRole():
     except:
         abort(500)
 
+@main_API.route('/api/cs/compte', methods={'GET'})
+def listeCompte():
+    try:
+        BaseDD = Manage_personnel()
+        dictionnaire_compte = BaseDD.afficher_liste_compte_cs()
+        return jsonify(dictionnaire_compte)
+    except:
+        abort(500)
+
 if __name__ == '__main__':
     main_API.run()
 
