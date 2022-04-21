@@ -19,3 +19,16 @@ class Manage_vaccin:
             retour.append({"id_vaccin":vaccin[0], "nom_vaccin": vaccin[1], "description": vaccin[2], "nombre_dose_max": vaccin[3], "quantitee_disponible": vaccin[4]})
 
         return retour
+
+    def afficher_liste_vaccin_cs(self):
+        # methode pour afficher tous les service
+
+        instructionBDD = "SELECT nom_vaccin, quantitee_disponible FROM vaccin"
+        self.curseurBDD.execute(instructionBDD)
+        resultat = self.curseurBDD.fetchall()
+        print(resultat)
+        retour = []
+        for vaccin in resultat:
+            retour.append({"NomVaccin":vaccin[0], "QuantiteeDisponible": vaccin[1]})
+
+        return retour

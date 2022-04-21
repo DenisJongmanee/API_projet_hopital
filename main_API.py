@@ -191,6 +191,15 @@ def listeService():
     except:
         abort(500)
 
+@main_API.route('/api/cs/service', methods={'GET'})
+def listeService():
+    try:
+        BaseDD = Manage_service()
+        dictionnaire_service = BaseDD.afficher_liste_service_cs()
+        return jsonify(dictionnaire_service)
+    except:
+        abort(500)
+
 
 # @main_API.route('/api/service', methods={'POST'})
 # def ajoutService():
@@ -328,8 +337,19 @@ def listeVaccin():
         dictionnaire_vaccin = BaseDD.afficher_liste_vaccin()
         return jsonify(dictionnaire_vaccin)
     except:
-        abort(500) 
-        
+        abort(500)
+
+
+@main_API.route('/api/cs/vaccin', methods={'GET'})
+def listeVaccin():
+    try:
+        BaseDD = Manage_vaccin()
+        dictionnaire_vaccin = BaseDD.afficher_liste_vaccin_cs()
+        return jsonify(dictionnaire_vaccin)
+    except:
+        abort(500)
+
+
 @main_API.route('/api/rendez_vous', methods={'GET'})
 def listeRendez_vous():
     try:

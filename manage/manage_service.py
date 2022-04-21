@@ -40,3 +40,14 @@ class Manage_service:
         for service in resultat:
             retour.append({"id_service":service[0], "nom_service": service[1], "zone_geographique": service[2]})
         return retour
+
+    def afficher_liste_service_cs(self):
+        # methode pour afficher tous les service
+        instructionBDD = "SELECT id_service, nom_service FROM Service"
+        self.curseurBDD.execute(instructionBDD)
+        resultat = self.curseurBDD.fetchall()
+        print(resultat)
+        retour = []
+        for service in resultat:
+            retour.append({"IdService":service[0], "NomService": service[1]})
+        return retour
