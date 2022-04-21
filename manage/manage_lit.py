@@ -18,4 +18,4 @@ class Manage_lit:
         print(lits)
         for lit in lits:
             retour.append({"id":lit[0], "num_lit":lit[1]})
-        return retour;
+        return retour
