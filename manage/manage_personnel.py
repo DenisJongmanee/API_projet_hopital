@@ -52,12 +52,12 @@ class Manage_personnel:
 
     def afficher_liste_compte_cs(self):
         # methode pour afficher tous les comptes
-        instructionBDD = "SELECT personnelsoignant.id_personnel, nom, prenom, date_naissance, adresse_mail, num_role, num_service FROM personnelsoignant"
+        instructionBDD = "SELECT personnelsoignant.id_personnel, nom, prenom, date_naissance, adresse_mail, num_role, num_service, nom_role, nom_service FROM personnelsoignant INNER JOIN Role on num_role = id_role INNER JOIN Service on num_service = id_service"
         self.curseurBDD.execute(instructionBDD)
         resultat = self.curseurBDD.fetchall()
         personnels_soignants = []
         for personnel_soignant in resultat:
-            personnels_soignants.append({"IdCompte":personnel_soignant[0], "Nom":personnel_soignant[1], "Prenom":personnel_soignant[2], "DateNaissance":personnel_soignant[3], "AdresseMail":personnel_soignant[4], "Role":personnel_soignant[5], "Service":personnel_soignant[6]})
+            personnels_soignants.append({"IdCompte":personnel_soignant[0], "Nom":personnel_soignant[1], "Prenom":personnel_soignant[2], "DateNaissance":personnel_soignant[3], "AdresseMail":personnel_soignant[4], "Role":personnel_soignant[5], "Service":personnel_soignant[6], "NomRole":personnel_soignant[7], "NomService":personnel_soignant[8]})
         retour = {"ListComptes": personnels_soignants}
         return retour
 

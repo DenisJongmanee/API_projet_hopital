@@ -31,8 +31,8 @@ class Manage_lit:
         lits = [] 
         for lit in resultat:
             if lit[1] == None :
-                lits.append({"NumeroLit":lit[0], "NumeroChambre":lit[1], "Occupation": True})
+                lits.append({"NumeroLit":lit[0], "NumeroChambre":0, "Occupation": False})
             else :
-                lits.append({"NumeroLit":lit[0], "NumeroChambre":lit[1], "Occupation": False})
+                lits.append({"NumeroLit":lit[0], "NumeroChambre":lit[1], "Occupation": True})
         retour = {"ListLits": lits}
         return retour
