@@ -13,8 +13,8 @@ class Manage_role:
         self.curseurBDD.execute(instructionBDD)
         resultat = self.curseurBDD.fetchall()
         print(resultat)
-        retour = []
+        roles = []
         for role in resultat:
-            retour.append({"IdRole":role[0], "NomRole": role[1]})
-
+            roles.append({"IdRole":role[0], "NomRole": role[1]})
+        retour = {"ListRoles": roles}
         return retour

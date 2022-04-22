@@ -352,7 +352,7 @@ def ajout_rendez_vous():
 
 #partie c#
 @main_API.route('/api/cs/service', methods={'GET'})
-def listeService():
+def listeServiceCS():
     try:
         BaseDD = Manage_service()
         dictionnaire_service = BaseDD.afficher_liste_service_cs()
@@ -361,7 +361,7 @@ def listeService():
         abort(500)
 
 @main_API.route('/api/cs/lit', methods={'GET'})
-def listeLit():
+def listeLitCS():
     try:
         BaseDD = Manage_lit()
         dictionnaire_chambre = BaseDD.afficher_liste_lit_cs()
@@ -370,7 +370,7 @@ def listeLit():
         abort(500)
 
 @main_API.route('/api/cs/vaccin', methods={'GET'})
-def listeVaccin():
+def listeVaccinCS():
     try:
         BaseDD = Manage_vaccin()
         dictionnaire_vaccin = BaseDD.afficher_liste_vaccin_cs()
@@ -398,7 +398,7 @@ def listeCompte():
         abort(500)
 
 @main_API.route('/api/cs/compte', methods={'POST'})
-def inscription():
+def inscriptionCS():
     message = request.get_json(force=True)
     BaseDD = Manage_personnel()
     if "Nom" in message and "Prenom" in message and "DateNaissance" in message and "AdresseMail" in message and "Role" in message and "Service" in message and "MotDePasse" in message :

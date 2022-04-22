@@ -25,13 +25,14 @@ class Manage_lit:
         # methode pour afficher toutes les chambres
         instructionBDD = "SELECT numero_lit, numero_chambre FROM chambre INNER JOIN sejour_chambre ON chambre.id_chambre=sejour_chambre.num_chambre INNER JOIN sejour ON sejour_chambre.num_sejour=sejour.id_sejour RIGHT JOIN lit ON sejour.num_lit=lit.id_lit"
         self.curseurBDD.execute(instructionBDD)
-        lits = self.curseurBDD.fetchall()
+        resultat = self.curseurBDD.fetchall()
         retour = []
-        print(lits)
-        for lit in lits:
+        print(resultat)
+        lits = [] 
+        for lit in resultat:
             if lit[1] == None :
-                retour.append({"NumeroLit":lit[0], "NumeroChambre":lit[1], "Occupation":"non"})
+                lits.append({"NumeroLit":lit[0], "NumeroChambre":lit[1], "Occupation": True})
             else :
-                retour.append({"NumeroLit":lit[0], "NumeroChambre":lit[1], "Occupation":"oui"})
-
+                lits.append({"NumeroLit":lit[0], "NumeroChambre":lit[1], "Occupation": False})
+        retour = {"ListLits": lits}
         return retour

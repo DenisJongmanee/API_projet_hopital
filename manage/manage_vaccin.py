@@ -27,8 +27,8 @@ class Manage_vaccin:
         self.curseurBDD.execute(instructionBDD)
         resultat = self.curseurBDD.fetchall()
         print(resultat)
-        retour = []
+        vaccins = []
         for vaccin in resultat:
-            retour.append({"NomVaccin":vaccin[0], "QuantiteeDisponible": vaccin[1]})
-
+            vaccins.append({"NomVaccin":vaccin[0], "QuantiteeDisponible": vaccin[1]})
+        retour = {"ListVaccins": vaccins}
         return retour

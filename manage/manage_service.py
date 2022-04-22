@@ -47,7 +47,8 @@ class Manage_service:
         self.curseurBDD.execute(instructionBDD)
         resultat = self.curseurBDD.fetchall()
         print(resultat)
-        retour = []
+        services = []
         for service in resultat:
-            retour.append({"IdService":service[0], "NomService": service[1]})
+            services.append({"IdService":service[0], "NomService": service[1]})
+        retour = {"ListServices": services}
         return retour
