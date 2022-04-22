@@ -404,8 +404,8 @@ def inscriptionCS():
     if "Nom" in message and "Prenom" in message and "DateNaissance" in message and "AdresseMail" in message and "Role" in message and "Service" in message and "MotDePasse" in message :
         personnel = Personnel(message["Nom"], message["Prenom"], message["DateNaissance"], message["AdresseMail"], message["Role"], message["Service"], message["MotDePasse"])
         try :
-            BaseDD.ajouter_personnel(personnel)
-            return "Ok"
+            id = BaseDD.ajouter_compte_cs(personnel)
+            return jsonify(id)
         except:
             abort(500)
     else:
@@ -424,13 +424,15 @@ def suppressionCompte(id):
 
 
 @main_API.route('/api/cs/compte', methods={'PUT'})
-def modificationCompte() :
+def modificationCompte():
     message = request.get_json(force=True)
     BaseDD = Manage_personnel()
-    if "IdCompte" in message and "Nom" in message and "Prenom" in message and "DateNaissance" in message and "AdresseMail" in message and "role" in message and "Service" in message and "MotDePasse" in message:
-        personnel = Personnel(message["Nom"], message["Prenom"], message["DateNaissance"], message["AdresseMail"], message["role"], message["Service"], message["MotDePasse"])
+    print("herherhe")
+    print(message)
+    if "IdCompte" in message and "Nom" in message and "Prenom" in message and "DateNaissance" in message and "AdresseMail" in message and "Role" in message and "Service" in message:
+        personnel = Personnel(message["Nom"], message["Prenom"], message["DateNaissance"], message["AdresseMail"], message["Role"], message["Service"], message["MotDePasse"])
         try :
-            BaseDD.modifier_personnel(personnel, message["IdCompte"])
+            BaseDD.modifier_compte_cs(personnel, message["IdCompte"])
             return "Ok"
         except:
             abort(500)
