@@ -411,18 +411,16 @@ def inscriptionCS():
     else:
         abort(406)
 
-@main_API.route('/api/cs/compte', methods={'DELETE'})
-def suppressionCompte():
-    message = request.get_json(force=True)
+@main_API.route('/api/cs/compte/<id>', methods={'DELETE'})
+def suppressionCompte(id):
     BaseDD = Manage_personnel()
-    if "personnel" in message :
-        try:
-            BaseDD.supprimer_compte_cs(message["personnel"])
-            return "Ok"
-        except:
-            abort(500)
-        else:
-            abort(406)
+    try:
+        BaseDD.supprimer_compte_cs(id)
+        return "Ok"
+    except:
+        abort(500)
+    else:
+        abort(406)
 
 
 @main_API.route('/api/cs/compte', methods={'PUT'})
