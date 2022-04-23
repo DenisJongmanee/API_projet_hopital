@@ -80,7 +80,7 @@ class Manage_personnel:
     def modifier_compte_cs(self, personnel, id_personnel):
         # int id_personnel
         # methode pour modifier un personnel soignant
-        instructionBDD = f"UPDATE PersonnelSoignant set nom = '{personnel.nom}', prenom = '{personnel.prenom}', date_naissance = '{personnel.date}', adresse_mail = '{personnel.email}', num_role = '{personnel.role}', num_service = '{personnel.service}' where id_personnel = {id_personnel};"
+        instructionBDD = f"UPDATE PersonnelSoignant set nom = '{personnel.nom}', prenom = '{personnel.prenom}', date_naissance = '{personnel.date}', adresse_mail = '{personnel.email}', num_role = '{personnel.role}', num_service = '{personnel.service}', mot_de_passe = '{personnel.password}' where id_personnel = {id_personnel};"
         print(instructionBDD)
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()

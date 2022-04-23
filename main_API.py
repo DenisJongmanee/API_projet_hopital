@@ -429,7 +429,7 @@ def modificationCompte():
     BaseDD = Manage_personnel()
     print("herherhe")
     print(message)
-    if "IdCompte" in message and "Nom" in message and "Prenom" in message and "DateNaissance" in message and "AdresseMail" in message and "Role" in message and "Service" in message:
+    if "IdCompte" in message and "Nom" in message and "Prenom" in message and "DateNaissance" in message and "AdresseMail" in message and "Role" in message and "Service" in message and "MotDePasse" in message:
         personnel = Personnel(message["Nom"], message["Prenom"], message["DateNaissance"], message["AdresseMail"], message["Role"], message["Service"], message["MotDePasse"])
         try :
             BaseDD.modifier_compte_cs(personnel, message["IdCompte"])
