@@ -10,11 +10,23 @@ class Manage_rendez_vous:
     def ajouter_rendez_vous(self, rendez_vous: Rendez_vous):
         # int id_sejour /str nom et zone géographique
         # methode pour ajouter un service
-        instructionBDD = f"INSERT INTO patient (nom, prenom, date_naissance, num_secu) " \
-                         f"VALUES ('{rendez_vous.nom}','{rendez_vous.prenom}', '{rendez_vous.date_naissance}', '{rendez_vous.num_secu}');"
+        instructionBDD = f"Select * from patient Where nom = '{rendez_vous.nom}' AND prenom = '{rendez_vous.prenom}'"
         self.curseurBDD.execute(instructionBDD)
-        self.conn.commit()
-        id_patient = self.curseurBDD.lastrowid
+        resultat = self.curseurBDD.fetchall()
+        print(resultat)
+        if resultat == []:
+            print('test if')
+            instructionBDD = f"INSERT INTO patient (nom, prenom, date_naissance, num_secu) " \
+                            f"VALUES ('{rendez_vous.nom}','{rendez_vous.prenom}', '{rendez_vous.date_naissance}', '{rendez_vous.num_secu}');"
+            self.curseurBDD.execute(instructionBDD)
+            self.conn.commit()
+            id_patient = self.curseurBDD.lastrowid
+            print (id_patient)
+        else :
+            print('test else')
+            id_patient = resultat[0][0]
+        print('id patient :')
+        print(id_patient)
         instructionBDD = f"INSERT INTO rendezvous (num_vaccin, num_patient, date_rendez_vous, quantieme_dose) " \
                          f"VALUES ('{rendez_vous.nom_vaccin}','{id_patient}', '{rendez_vous.date_vaccination}', '{rendez_vous.dose}');"
         self.curseurBDD.execute(instructionBDD)
