@@ -38,8 +38,9 @@ def inscription():
     message = request.get_json(force=True)
     BaseDD = Manage_personnel()
     if "nom" in message and "prenom" in message and "date" in message and "service" in message and "email" in message and "password" in message :
-        personnel = Personnel(message["nom"], message["prenom"], message["date"], message["service"], message["email"], message["password"])
+        personnel = Personnel(message["nom"], message["prenom"], message["date"], message["email"], 1, message["service"], message["password"])
         try :
+            print("testest")
             BaseDD.ajouter_personnel(personnel)
             return "Ok"
         except:

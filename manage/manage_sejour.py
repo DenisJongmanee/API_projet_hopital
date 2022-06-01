@@ -8,12 +8,13 @@ class Manage_sejour:
         self.curseurBDD = self.conn.cursor()
 
     def ajouter_sejour(self, sejour : Sejour):
-    
+        print("test")
         # methode pour ajouter un séjour associé à un patient + lit
         instructionBDD = f"INSERT INTO Sejour (date_entree_sejour, date_sortie_sejour, probleme, num_patient, num_lit) VALUES ('{sejour.dateEntree}', '{sejour.dateSortie}', '{sejour.probleme}', {sejour.patient}, {sejour.idLit});"
+        print(instructionBDD)
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()
-
+        print("test1")
         #id du sejour généré
         idsejour = self.curseurBDD.lastrowid
 
@@ -21,12 +22,12 @@ class Manage_sejour:
         instructionBDD2 = f"INSERT INTO sejour_chambre (num_sejour, num_chambre, date_entree_chambre) VALUES ({idsejour},{sejour.idChambre},'{sejour.dateEntree}');"
         self.curseurBDD.execute(instructionBDD2)
         self.conn.commit()
-        
+        print("test2")
         #service
         instructionBDD3 = f"INSERT INTO service_sejour (date_entree_service, num_sejour, num_service) VALUES ('{sejour.dateEntree}', {idsejour}, {sejour.service});"
         self.curseurBDD.execute(instructionBDD3)
         self.conn.commit()
-        
+        print("test3")
       
 
     def afficher_liste_sejour(self):

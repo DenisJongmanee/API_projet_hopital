@@ -20,9 +20,12 @@ class Manage_personnel:
     
     def ajouter_personnel(self, personnel):
         # methode pour ajouter un personnel soignant
-        instructionBDD = f"INSERT INTO personnelsoignant (nom, prenom, date_naissance, num_service, adresse_mail, mot_de_passe) " \
-                         f"VALUES ('{personnel.nom}', '{personnel.prenom}', '{personnel.date}', {personnel.service}, '{personnel.email}', '{personnel.password}')"
+        print("test")
+        instructionBDD = f"INSERT INTO personnelsoignant (nom, prenom, date_naissance, num_service, adresse_mail, mot_de_passe, num_role) " \
+                         f"VALUES ('{personnel.nom}', '{personnel.prenom}', '{personnel.date}', {personnel.service}, '{personnel.email}', '{personnel.password}', 1)"
+        print(instructionBDD)
         self.curseurBDD.execute(instructionBDD)
+        
         self.conn.commit()
 
     # def supprimer_personnel(self, personnel):
